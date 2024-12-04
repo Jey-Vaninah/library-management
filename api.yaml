@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  title: STD23042 - TD1
+  version: 1.0.0
+servers:
+  - url: https://localhost.std23042.com
+components:
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Lucas Clavel
+        sex:
+          $ref: '#/components/shemas/Sex'
+    Sex:
+      type: string
+      enum:
+        - M
+        - F
+     

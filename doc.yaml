@@ -1,7 +1,0 @@
-openapi: 3.0.3
-info:
-  title: STD23042 - TD1
-  version: '1.0.0'
-servers:
-  - url: https://localhost.std23042.com
-paths:
