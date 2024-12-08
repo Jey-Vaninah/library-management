@@ -154,7 +154,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/UpdateStudentGroup"
 
-  /students:
+  /students/page/{page}/pageSize/{pageSize}:
     get:
       tags:
         - Students
@@ -167,6 +167,8 @@ paths:
           required: false
           schema:
             type: string
+        - $ref: "#/components/parameters/PathPage"
+        - $ref: "#/components/parameters/PathPageSize"
 
       responses:
         '200':
@@ -308,6 +310,22 @@ components:
         - M
         - F
   parameters:
+    PathPage:
+      name: page
+      in: path 
+      required: true 
+      description: Page to retrieve
+      schema:
+        type: integer
+        default: 1
+    PathPageSize:
+      name: pageSize
+      in: path
+      required: true 
+      description: PageSize to retrieve for each page
+      schema:
+        type: integer
+        default: 50 
     Page:
       name: page
       in: query
