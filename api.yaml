@@ -240,7 +240,7 @@ components:
     UpdateStudentGroup:
       type: object
       properties:
-        bookId:
+        groupId:
           type: string
           format: uuid
           example: J2
