@@ -152,7 +152,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Book"
-  /authors:
+  /authors/page/{page}/pageSize/{pageSize}:
     get:
       tags:
         - Authors
@@ -165,6 +165,8 @@ paths:
         required: false
         schema:
           type: string
+      - $ref: "#/components/parameters/PathPage"
+      - $ref: "#/components/parameters/PathPageSize"
       responses:
         '200':
           description: List of all authors
@@ -292,6 +294,22 @@ components:
         - M
         - F
   parameters:
+    PathPage:
+      name: page
+      in: path 
+      required: true 
+      description: Page to retrieve
+      schema:
+        type: integer
+        default: 1
+    PathPageSize:
+      name: pageSize
+      in: path
+      required: true 
+      description: PageSize to retrieve for each page
+      schema:
+        type: integer
+        default: 50 
     Page:
       name: page
       in: query
