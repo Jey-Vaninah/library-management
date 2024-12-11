@@ -36,8 +36,8 @@ paths:
             type: string
             format: date
             example: 2023-12-31
-        - $ref: "#/components/parameters/Page"
-        - $ref: "#/components/parameters/PageSize"
+        - $ref: "#/components/parameters/QueryPaginationPage"
+        - $ref: "#/components/parameters/QueryPaginationPageSize"
       responses:
         '200':
           description: List of all books
@@ -165,8 +165,8 @@ paths:
         required: false
         schema:
           type: string
-      - $ref: "#/components/parameters/PathPage"
-      - $ref: "#/components/parameters/PathPageSize"
+      - $ref: "#/components/parameters/PathPaginationPage"
+      - $ref: "#/components/parameters/PathPaginationPageSize"
       responses:
         '200':
           description: List of all authors
@@ -294,7 +294,7 @@ components:
         - M
         - F
   parameters:
-    PathPage:
+    PathPaginationPage:
       name: page
       in: path 
       required: true 
@@ -302,7 +302,7 @@ components:
       schema:
         type: integer
         default: 1
-    PathPageSize:
+    PathPaginationPageSize:
       name: pageSize
       in: path
       required: true 
@@ -310,7 +310,7 @@ components:
       schema:
         type: integer
         default: 50 
-    Page:
+    QueryPaginationPage:
       name: page
       in: query
       required: false 
@@ -318,7 +318,7 @@ components:
       schema:
         type: integer
         default: 1
-    PageSize:
+    QueryPaginationPageSize:
       name: pageSize
       in: query
       required: false 
