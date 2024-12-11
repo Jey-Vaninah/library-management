@@ -39,14 +39,14 @@ paths:
         - $ref: "#/components/parameters/QueryPaginationPage"
         - $ref: "#/components/parameters/QueryPaginationPageSize"
       responses:
-        '200':
-          description: List of all books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Book"
+        200:
+          $ref: "#/components/responses/ListOfBook200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
     post:
       tags:
         - Books
@@ -59,12 +59,14 @@ paths:
             schema:
               $ref: "#/components/schemas/CrupdateBook"
       responses:
-        '201':
-          description: Book created successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Book"
+        200:
+          $ref: "#/components/responses/Book200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
     put:
       tags:
         - Books
@@ -77,12 +79,14 @@ paths:
             schema:
               $ref: "#/components/schemas/CrupdateBook"
       responses:
-        '200':
-          description: Book updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Book"
+        200:
+          $ref: "#/components/responses/Book200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
   /books/{bookId}/authors/{authorId}:
     put:
       tags:
@@ -103,12 +107,14 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
-          description: Book updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Book"
+        200:
+          $ref: "#/components/responses/Book200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
   /books/authors:
     put:
       tags:
@@ -124,14 +130,14 @@ paths:
               items:
                 $ref: "#/components/schemas/UpdateBookAuthor"
       responses:
-        '200':
-          description: Book updated successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Book"
+        200:
+          $ref: "#/components/responses/ListOfUpdatedAuthorBook200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
   /books/{id}:
     delete:
       tags:
@@ -146,12 +152,14 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
-          description: Book deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Book"
+        200:
+          $ref: "#/components/responses/Book200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
   /authors/page/{page}/pageSize/{pageSize}:
     get:
       tags:
@@ -168,14 +176,14 @@ paths:
       - $ref: "#/components/parameters/PathPaginationPage"
       - $ref: "#/components/parameters/PathPaginationPageSize"
       responses:
-        '200':
-          description: List of all authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Author"
+        200:
+          $ref: "#/components/responses/ListOfAuthors200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
     post:
       tags:
         - Authors
@@ -188,12 +196,14 @@ paths:
             schema:
               $ref: "#/components/schemas/Author"
       responses:
-        '201':
-          description: Author created successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Author"
+        200:
+          $ref: "#/components/responses/Author200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
     put:
       tags:
         - Authors
@@ -206,12 +216,14 @@ paths:
             schema:
               $ref: "#/components/schemas/Author"
       responses:
-        '200':
-          description: Author updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Author"
+        200:
+          $ref: "#/components/responses/Author200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
   /authors/{id}:
     delete:
       tags:
@@ -226,12 +238,14 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
-          description: Author deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Author"
+        200:
+          $ref: "#/components/responses/Author200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
 components:
   schemas:
     UpdateBookAuthor:
@@ -293,6 +307,119 @@ components:
       enum:
         - M
         - F
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: object
+          properties:
+            code:
+              type: number
+              example: 200
+            message:
+              type: string
+              example: OK
+        body:
+            type: object
+  responses:
+    Author200:
+      description: One Author 
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                $ref: "#/components/schemas/Author"
+    ListOfAuthors200:
+      description: List of Author 
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Author"
+    Book200:
+      description: One Book 
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                $ref: "#/components/schemas/Book"
+    ListOfUpdatedAuthorBook200:
+      description: List of updateAuthorBook
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/UpdateBookAuthor"
+    ListOfBook200:
+      description: List of Books 
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+    400:
+      description: bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            default:
+              status:
+                code: 400
+                message: BAD REQUEST
+              body:
+                error: Incorrect request
+    403:
+      description: forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            default:
+              status:
+                code: 403
+                message: FORBIDDEN
+              body:
+                error: access denied
+    500:
+      description: internal server erreur
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            default:
+              status:
+                code: 500
+                message: INTERNAL SERVER ERREUR
+              body:
+                error: internal server erreur
   parameters:
     PathPaginationPage:
       name: page
