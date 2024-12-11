@@ -247,6 +247,58 @@ paths:
           $ref: "#/components/responses/403"
         500:
           $ref: "#/components/responses/500"
+  /groups/import:
+    description: Import groups from JSON and Excel files
+    post:
+      tags:
+        - Groups
+      requestBody:
+        content:
+          application/ms-excel:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/BaseGroup"
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/BaseGroup"
+      responses:
+        200:
+          description: Return the inserted students with their IDs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+  /students/import:
+    description: Import students from JSON and Excel files
+    post:
+      tags:
+        - Students
+      requestBody:
+        content:
+          application/ms-excel:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BaseStudent'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BaseStudent'
+      responses:
+        200:
+          description: Return the inserted students with their IDs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
 components:
   schemas:
     UpdateStudentGroup:
@@ -259,13 +311,9 @@ components:
         studentId:
           type: string
           example: 123e4567-e89b-12d3-a456-426614174000
-    CrupdateGroup:
+    BaseGroup:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
           example: J2
@@ -278,6 +326,15 @@ components:
           example: 45
         promotion:
           $ref: "#/components/schemas/Promotion"
+    CrupdateGroup:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/BaseGroup"
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
     Group:
       type: object
       allOf:
@@ -296,11 +353,16 @@ components:
         - K
     Student:
       type: object
+      allOf:
+        - $ref: "#/components/schemas/BaseStudent"
       properties:
         id:
           type: string
           format: uuid
           example: 471eae60-abba-4732-b2a0-2e2b4d04cea1
+    BaseStudent:
+      type: object
+      properties:
         name:
           type: string
           example: Lucas Clavel

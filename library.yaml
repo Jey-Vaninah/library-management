@@ -246,8 +246,76 @@ paths:
           $ref: "#/components/responses/403"
         500:
           $ref: "#/components/responses/500"
+  /books/import:
+    description: Import books from JSON and Excel files
+    post:
+      tags:
+        - Books
+      requestBody:
+        content:
+          application/ms-excel:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/BaseBook"
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/BaseBook"
+      responses:
+        200:
+          description: Return the inserted authors with their IDs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+  /authors/import:
+    description: Import authors from JSON and Excel files
+    post:
+      tags:
+        - Authors
+      requestBody:
+        content:
+          application/ms-excel:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BaseAuthor'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BaseAuthor'
+      responses:
+        200:
+          description: Return the inserted authors with their IDs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
 components:
   schemas:
+    BaseBook:
+      type: object
+      properties:
+        bookName:
+          type: string
+          example: Larouse
+        pageNumbers:
+          type: number
+          example: 50
+        releaseDate:
+          type: string
+          format: date
+          example: 1925-04-10 
+        topic:
+          $ref: "#/components/schemas/Topic"      
+
     UpdateBookAuthor:
       type: object
       properties:
@@ -267,41 +335,36 @@ components:
           $ref: "#/components/schemas/Author"
     CrupdateBook:
       type: object
+      allOf:
+        - $ref: "#/components/schemas/BaseBook"
       properties:
         id:
           type: string
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
-        bookName:
-          type: string
-          example: Larouse
-        pageNumbers:
-          type: number
-          example: 50
-        releaseDate:
-          type: string
-          format: date
-          example: 1925-04-10 
-        topic:
-          $ref: "#/components/schemas/Topic"      
     Topic:
       type: string
       enum:
         - ROMANCE
         - COMEDY
         - OTHER
-    Author:
+    BaseAuthor:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          example: 471eae60-abba-4732-b2a0-2e2b4d04cea1
         name:
           type: string
           example: Lucas Clavel
         sex:
           $ref: '#/components/schemas/Sex'
+    Author:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/BaseAuthor"
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 471eae60-abba-4732-b2a0-2e2b4d04cea1
     Sex:
       type: string
       enum:
