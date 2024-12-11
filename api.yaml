@@ -37,14 +37,14 @@ paths:
         - $ref: "#/components/parameters/QueryPaginationPage"
         - $ref: "#/components/parameters/QueryPaginationPageSize"
       responses:
-        '200':
-          description: List of all groups
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Group"
+        200:
+          $ref: "#/components/responses/ListOfGroup200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
     post:
       tags:
         - Groups
@@ -57,12 +57,14 @@ paths:
             schema:
               $ref: "#/components/schemas/CrupdateGroup"
       responses:
-        '201':
-          description: Group created successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
+        200:
+          $ref: "#/components/responses/Group200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
     put:
       tags:
         - Groups
@@ -75,12 +77,14 @@ paths:
             schema:
               $ref: "#/components/schemas/CrupdateGroup"
       responses:
-        '200':
-          description: Group updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
+        200:
+          $ref: "#/components/responses/Group200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
   /groups/{id}:
     delete:
       tags:
@@ -95,12 +99,14 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
-          description: Group deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
+        200:
+          $ref: "#/components/responses/Group200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
   
   /groups/{groupId}/students/{studentId}:
     put:
@@ -122,14 +128,14 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
-          description: Attached one student to one group
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Group"
+        200:
+          $ref: "#/components/responses/Group200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
   /groups/students:
     put:
       tags:
@@ -145,14 +151,14 @@ paths:
               items:
                 $ref: "#/components/schemas/UpdateStudentGroup"
       responses:
-        '200':
-          description: Attached students to groups 
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/UpdateStudentGroup"
+        200:
+          $ref: "#/components/responses/ListOfUpdatedStudentGroup200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
 
   /students/page/{page}/pageSize/{pageSize}:
     get:
@@ -171,14 +177,14 @@ paths:
         - $ref: "#/components/parameters/PathPaginationPageSize"
 
       responses:
-        '200':
-          description: List of all students
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Student"
+        200:
+          $ref: "#/components/responses/ListOfStudents200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
     post:
       tags:
         - Students
@@ -191,12 +197,14 @@ paths:
             schema:
               $ref: "#/components/schemas/Student"
       responses:
-        '201':
-          description: Student created successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Student"
+        200:
+          $ref: "#/components/responses/Student200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
     put:
       tags:
         - Students
@@ -209,12 +217,14 @@ paths:
             schema:
               $ref: "#/components/schemas/Student"
       responses:
-        '200':
-          description: Student updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Student"
+        200:
+          $ref: "#/components/responses/Student200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
   /students/{id}:
     delete:
       tags:
@@ -229,15 +239,16 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
-          description: Student deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Student"
+        200:
+          $ref: "#/components/responses/Student200"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
 components:
   schemas:
-
     UpdateStudentGroup:
       type: object
       properties:
@@ -323,11 +334,107 @@ components:
               type: string
               example: OK
         body:
-          type: object
-
-    
+            type: object
+  responses:
+    Student200:
+      description: One Student 
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                $ref: "#/components/schemas/Student"
+    ListOfStudents200:
+      description: List of student 
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Student"
+    Group200:
+      description: One group 
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                $ref: "#/components/schemas/Group"
+    ListOfUpdatedStudentGroup200:
+      description: List of updateStudentGroup
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/UpdateStudentGroup"
+    ListOfGroup200:
+      description: List of groups 
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            properties:
+              body: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Group"
+    400:
+      description: bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            default:
+              status:
+                code: 400
+                message: BAD REQUEST
+              body:
+                error: Incorrect request
+    403:
+      description: forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            default:
+              status:
+                code: 403
+                message: FORBIDDEN
+              body:
+                error: access denied
+    500:
+      description: internal server erreur
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "#/components/schemas/ApiResponse"
+            default:
+              status:
+                code: 500
+                message: INTERNAL SERVER ERREUR
+              body:
+                error: internal server erreur
   parameters:
-
     PathPaginationPage:
       name: page
       in: path 
